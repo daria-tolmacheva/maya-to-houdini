@@ -29,6 +29,14 @@
   - import the alembic
   - generate and assign the material with corresponding textures
   - merge every group to preserve hierarchy
+  - 
+### Structure
+1. trigger script, calling other scripts
+2. exporter script to export files from Maya
+3. converter script to convert the textures
+4. importer script to import and build scene in Houdini
+5. tests (not sure about the structure yet)
+6. installation/deployment bits
 
 ## Texture Conversion Step
 
