@@ -29,7 +29,7 @@
   - import the alembic
   - generate and assign the material with corresponding textures
   - merge every group to preserve hierarchy
-  - 
+
 ### Structure
 1. trigger script, calling other scripts
 2. exporter script to export files from Maya
