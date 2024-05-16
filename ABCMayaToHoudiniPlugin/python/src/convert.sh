@@ -16,10 +16,10 @@ echo "Converting textures"
 # just goes though current directory and converts all
 # pngs to rat and leaves them there
 
-directory="./"
+directory="."
 pattern="*.png"
 
-for file in "$directory"/$pattern;
+for file in "$directory"/*.png;
 do
   echo "iconvert $file ${file%.*}.rat"
   iconvert $file "${file%.*}.rat"
