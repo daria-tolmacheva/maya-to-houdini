@@ -2,6 +2,7 @@ import maya.cmds as cmds
 import maya.api.OpenMaya as OpenMaya
 import os
 
+import subprocess
 import sys
 
 from PySide2.QtGui import QCloseEvent
@@ -14,16 +15,15 @@ from PySide2.QtCore import *
 from PySide2.QtWidgets import *
 from pathlib import Path
 from shiboken2 import wrapInstance
-import tempfile
+from maya.app.general.mayaMixin import MayaQWidgetDockableMixi
 import pymel.core as pm
-
 
 def get_main_window():
   """this returns the maya main window for parenting"""
   window = omui.MQtUtil.mainWindow()
   return wrapInstance(int(window), QDialog)
 
-class MayaAlembicExporter(QDialog) :
+class MayaAlembicExporter(MayaQWidgetDockableMixin, QtWidgets.QDialog) :
 
   def __init__(self, parent=get_main_window()):
     """init the class and setup dialog"""
@@ -200,6 +200,28 @@ class MayaAlembicExporter(QDialog) :
     os.makedirs(current_dir, exist_ok=True)
     print(f"current_dir = {current_dir}")
     self.exportNodes(objects, current_dir)
+    
+    # import to Houdini
+    # if self.destination_option.currentIndex() == 0 :
+    #   command = f"./src/executeSceneSetUpCode.sh {self.hip_filename.value()}"
+    #   result = subprocess.run(command,
+    #                           stdout = subprocess.PIPE,
+    #                           stderr = subprocess.STDOUT,
+    #                           text = True,
+    #                           shell=True)
+    #   print(result.stdout)
+    #   scene_filename = self.hip_filename.text()
+    # else :
+    #   scene_filename = self.hip_filename_existing.text()
+    # # importer code
+    # command = f"./src/executeImporterCode.sh {scene_filename} {self.assets_dir}"
+    # result = subprocess.run(command,
+    #                         stdout = subprocess.PIPE,
+    #                         stderr = subprocess.STDOUT,
+    #                         text = True,
+    #                         shell=True)
+    # print(result.stdout)
+
 
   # Depth-first iteration over node tree
   # to create corresponding directory structure

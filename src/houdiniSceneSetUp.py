@@ -2,6 +2,7 @@
 # Called if importing animation to new file
 
 import hou
+import sys
 
 # Set up the stage level network to organise the scene
 # including /obj geometry, lighting and render nodes
@@ -41,4 +42,5 @@ def createNewFile(filename : str) :
   hou.hipFile.save(filename)
 
 if __name__ == "__main__":
-  createNewFile("./NewScene.hip")
+  scene_filename = sys.argv[1]
+  createNewFile(scene_filename)

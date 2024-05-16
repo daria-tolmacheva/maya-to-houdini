@@ -98,10 +98,13 @@ class HoudiniAlembicsImporter() :
     self.setupObjScene(assets_dir)
     hou.hipFile.setSaveMode(hou.saveMode.Text)
     hou.hipFile.save(scene_filename)
+    print(f"Import to {Path(scene_filename).name} successful")
+    # logging to file
+    # with open ("debug.txt", "w") as file :
+    #   file.write(f"Import to {Path(scene_filename).name} successful")
 
 
 if __name__ == "__main__":
   scene_filename = sys.argv[1]
   assets_dir = sys.argv[2]
-  importer = HoudiniAlembicsImporter()
-  importer.importToFile(scene_filename, assets_dir)
+  HoudiniAlembicsImporter().importToFile(scene_filename, assets_dir)

@@ -1,5 +1,11 @@
 # Automated pipeline to export animation from Maya to Houdini 
 
+## Running tests
+Tests for Houdini part of the pipeline can be run with
+```hython -m unittest discover -s src/tests/```
+
+
+
 ### Input:
 - Maya animated scene file with objects following the naming convention and appropriately grouped
   - Scene_1 -> Character_1 -> body, hair, shorts etc
