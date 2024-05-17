@@ -16,10 +16,10 @@ Houdini Importer helps quickly import those alembic files, while recreating the 
 2. Right-click folder `ABCMayaToHoudiniPlugin` and choose "Open in Terminal" (or otherwise navigate to this folder in the terminal).
 3. Copy the following code and press `Enter`:
     ```python install.py```
-4. Now open Maya 2023 and click on shelf "AbcExporter".
+4. Now open Maya 2023 (or restart if already open) and click on shelf "AbcExporter".
    1. The "AbcExporter" shelf tool is available and will be opened with a click.
    2. Once open, it can be docked like any other Maya window.
-5. Open Houdini20.
+5. Open Houdini20 (or restart if already open).
    1. Press `+` for "New Tab" -> New Pane Tab Type -> Misc -> Python Panel
    2. Switch from "Quick Start: Calendar Example" to "Alembics Importer"
    3. Once open, it is ready to be used and can be treated as any other Tab.
