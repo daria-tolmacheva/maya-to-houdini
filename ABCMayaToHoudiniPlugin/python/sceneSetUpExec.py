@@ -7,7 +7,7 @@ def sceneSetUpExec(scene_filename : str, currentDir :str) :
 
   # command = f"{currentDir}/src/executeSceneSetUpCode.sh {scene_filename}"
 
-  command = f"echo \"Creating new Houdini scene\"; cd /opt/hfs20.0.506/; source houdini_setup_bash; hython src/houdiniSceneSetUp.py {scene_filename}"
+  command = f"echo \"Creating new Houdini scene\"; cd /opt/hfs20.0.506/; source houdini_setup_bash; hython houdiniSceneSetUp.py {scene_filename}"
 
   result = subprocess.run(command,
                           stdout = subprocess.PIPE,

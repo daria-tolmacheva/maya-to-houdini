@@ -9,4 +9,4 @@ source houdini_setup_bash
 cd $current_dir
 
 # Execute SceneSetUp Code
-hython src/houdiniSceneSetUp.py $1
+hython houdiniSceneSetUp.py $1

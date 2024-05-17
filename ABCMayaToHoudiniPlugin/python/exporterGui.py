@@ -19,8 +19,8 @@ from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 import pymel.core as pm
 import pathlib
 
-from src.sceneSetUpExec import sceneSetUpExec
-from src.importerExec import importerExec
+from sceneSetUpExec import sceneSetUpExec
+from importerExec import importerExec
 
 
 def get_main_window():

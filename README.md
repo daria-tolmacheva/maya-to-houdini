@@ -90,5 +90,5 @@ The `/stage` level will include the basic Karma render nodes, object level impor
 
 ## Running tests
 Tests for Houdini part of the pipeline can be run from inside `python` folder with
-```hython -m unittest discover -s src/tests/```
+```hython -m unittest discover -s tests/```
 

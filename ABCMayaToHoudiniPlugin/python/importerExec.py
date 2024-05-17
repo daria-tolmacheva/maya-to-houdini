@@ -7,7 +7,7 @@ def importerExec(scene_filename : str, assets_dir : str, currentDir : str) :
 
   # command = f"{currentDir}/src/executeImporterCode.sh {scene_filename} {assets_dir}"
 
-  command = f"echo \"Importing alembics\"; # Set up Houdini Environment; cd /opt/hfs20.0.506/; source houdini_setup_bash; hython src/importer.py {scene_filename} {assets_dir}"
+  command = f"echo \"Importing alembics\"; # Set up Houdini Environment; cd /opt/hfs20.0.506/; source houdini_setup_bash; hython importer.py {scene_filename} {assets_dir}"
 
   result = subprocess.run(command,
                           stdout = subprocess.PIPE,

@@ -9,4 +9,4 @@ source houdini_setup_bash
 cd $current_dir
 
 # Execute Importer Code
-hython src/importer.py $1 $2
+hython importer.py $1 $2
