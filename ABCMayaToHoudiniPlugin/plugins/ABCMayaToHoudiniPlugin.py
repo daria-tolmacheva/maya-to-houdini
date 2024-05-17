@@ -1,3 +1,8 @@
+################################################################################################
+# This file is a modified version of Jon Macey's plugin template file
+################################################################################################
+
+
 import maya.api.OpenMaya as om
 import maya.cmds as cmds
 import maya.OpenMayaUI as OpenMayaUI1

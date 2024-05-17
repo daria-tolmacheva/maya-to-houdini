@@ -15,6 +15,13 @@ import pathlib
 
 
 class HoudiniAlembicImporter(QDialog) :
+  """
+    A tool for inporting Alembic Cache files to Houdini.
+
+    This class includes a Qt GUI interface and import backend for
+    the importer tool.
+
+  """
 
   def __init__(self, parent=None):
     """init the class and setup dialog"""
@@ -24,8 +31,6 @@ class HoudiniAlembicImporter(QDialog) :
     self.setWindowTitle("Maya Alembic Exporter")
     self.resize(500, 300)
     grid_layout = QGridLayout(self)
-
-    
 
     # Add import settings
     row = 0
@@ -109,6 +114,7 @@ class HoudiniAlembicImporter(QDialog) :
     import_gb_layout.addWidget(self.export_button, import_row, 3, 1, 1)
   
   def assets_folder_button_clicked(self) :
+    """Pop up for asset folder search"""
     try :
       self.assets_dir=QFileDialog.getExistingDirectory(self,"Select your assets folder for geometry export", self.assets_dir)
     except :
@@ -117,6 +123,7 @@ class HoudiniAlembicImporter(QDialog) :
     self.assets_dir_line_edit.setPlaceholderText(self.assets_dir)
 
   def hip_file_button_clicked(self) :
+    """Pop up for houdini scene file search"""
     try :
       self.hip_filename_existing=QFileDialog.getOpenFileName(self,"Select a .hip file for geometry import", "./", "Houdini Scene Files (*.hip)")
     except :
@@ -125,6 +132,7 @@ class HoudiniAlembicImporter(QDialog) :
     self.hip_file_line_edit.setPlaceholderText(self.hip_filename_existing)
 
   def import_dest_option_changed(self, index) :
+    """Visibility toggle for different file source options"""
     index = self.destination_option.currentIndex()
     if index == 0 :
       self.hip_folder_button.setVisible(True)
@@ -142,6 +150,7 @@ class HoudiniAlembicImporter(QDialog) :
       self.hip_file_line_edit.setVisible(True)
 
   def hip_folder_button_clicked(self) :
+    """Pop up for .hip file parent folder search"""
     try :
       self.hip_folder=QFileDialog.getExistingDirectory(self,"Select your project folder for .hip file import", self.hip_folder)
     except :
@@ -150,6 +159,7 @@ class HoudiniAlembicImporter(QDialog) :
     self.hip_folder_line_edit.setPlaceholderText(self.hip_folder)
 
   def tex_folder_button_clicked(self) :
+    """Pop up for textures folder search"""
     try :
       self.tex_dir=QFileDialog.getExistingDirectory(self,"Select your textures folder to assign at import", self.tex_dir)
     except :
@@ -158,6 +168,12 @@ class HoudiniAlembicImporter(QDialog) :
     self.tex_dir_line_edit.setPlaceholderText(self.tex_dir)
 
   def importSelected(self) :
+    """
+    This function manages and calls  functions that create and initialise
+    the new .hip file if needed, followed by scene reconstruction based on
+    the imported alembics and corresponding textures.
+    """
+
     print(f"Importing to Houdini")
     currentDir = pathlib.Path.cwd()
     if self.destination_option.currentIndex() == 0 :
@@ -171,9 +187,11 @@ class HoudiniAlembicImporter(QDialog) :
     # importer code
     self.importerExec(scene_filename, self.assets_dir, currentDir)
 
-  # Set up the stage level network to organise the scene
-  # including /obj geometry, lighting and render nodes
   def stageSetUp(self) :
+    """
+    This function sets up the stage level network to organise the scene
+    including /obj geometry, lighting and render nodes.
+    """
     # Import scene from /obj
     scene_import = hou.node("/stage").createNode("sceneimport::2.0", node_name="import_scene")
     # Add basic Karma light
@@ -196,8 +214,10 @@ class HoudiniAlembicImporter(QDialog) :
     # Makes the network readable
     hou.node("/stage").layoutChildren()
   
-  # Create, initialise and save the new file
   def createNewFile(self, filename : str) :
+    """
+    This function creates, initialises and saves the new .hip file.
+    """
     hou.hipFile.clear()
     self.stageSetUp()
     hou.hipFile.setSaveMode(hou.saveMode.Text)
@@ -207,6 +227,9 @@ class HoudiniAlembicImporter(QDialog) :
     self.createNewFile(f"{currentDir}/{scene_filename}")
 
   def setupObjScene(self, assets_dir : str) :
+    """
+    This function creates the obj level node tree from .abc files.
+    """
     # check if geometry dir exists, if yes - assign geometry_dir
     assets_path = Path(assets_dir)
     if Path(assets_path / 'Geometry').is_dir() == False :
@@ -242,6 +265,9 @@ class HoudiniAlembicImporter(QDialog) :
     hou.node("/obj").layoutChildren()
 
   def createNodeTree(self, parent_dir : Path, parent_node : hou.Node, child_merge : hou.Node) :
+    """
+    This recursive function creates the obj level node sub-tree from .abc files.
+    """
     # create node tree
     for dir_object in parent_dir.iterdir() :
       if dir_object.is_file() :
@@ -263,6 +289,9 @@ class HoudiniAlembicImporter(QDialog) :
         child_merge.setNextInput(new_merge)
 
   def createMaterial(self, dir_object : Path, parent_node : hou.Node) :
+    """
+    This function creates the material corresponding to the input node
+    """
     # create material
     material = self.current_matnet.createNode("principledshader::2.0", node_name=dir_object.stem+"_shader")
     material.parm("basecolorr").set(1)
@@ -293,6 +322,10 @@ class HoudiniAlembicImporter(QDialog) :
     return material_node
 
   def importToFile(self, scene_filename : str, assets_dir : str) :
+    """
+    This function is an extry to the process of manipulating
+    houdini nodes inside .hip file
+    """
     hou.hipFile.load(scene_filename)
     self.setupObjScene(assets_dir)
     hou.hipFile.setSaveMode(hou.saveMode.Text)
@@ -300,6 +333,10 @@ class HoudiniAlembicImporter(QDialog) :
     print(f"Import to {Path(scene_filename).name} successful")
 
   def importerExec(self, scene_filename : str, assets_dir : str, currentDir : str) :
+    """
+    This function is an extry to the process of creating the nodetree of
+    imported nodes.
+    """
     self.importToFile(f"{currentDir}/{scene_filename}", assets_dir)
 
 

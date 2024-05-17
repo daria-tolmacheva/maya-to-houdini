@@ -80,8 +80,8 @@ class MayaAlembicExporter(MayaQWidgetDockableMixin, QDialog) :
     self.export_button.clicked.connect(self.exportSelected)
     export_gb_layout.addWidget(self.export_button, export_row, 3, 1, 1)
 
-
   def assets_folder_button_clicked(self) :
+    """Pop up for asset folder search"""
     try :
       self.assets_dir=QFileDialog.getExistingDirectory(self,"Select your assets folder for geometry export", self.assets_dir)
     except :
@@ -90,6 +90,10 @@ class MayaAlembicExporter(MayaQWidgetDockableMixin, QDialog) :
     self.assets_dir_line_edit.setPlaceholderText(self.assets_dir)
 
   def exportSelected(self) :
+    """
+    Callback function for Ecport button pressed.
+    Kickstarts the export process.
+    """
     # Get the selected Objects
     current_view = cmds.getPanel(withFocus=True)
     objects = cmds.ls(sl=True)
@@ -101,12 +105,12 @@ class MayaAlembicExporter(MayaQWidgetDockableMixin, QDialog) :
     print(f"current_dir = {current_dir}")
     self.exportNodes(objects, current_dir)
 
-
-
-  # Depth-first iteration over node tree
-  # to create corresponding directory structure
-  # and export files accordingly
   def exportNodes(self, nodes, current_dir) :
+    """
+    Depth-first iteration over node tree
+    to create corresponding directory structure
+    and export files accordingly
+    """
     for node in nodes :
       children = cmds.listRelatives(node, children=True, type="transform")
       if children is None :
@@ -123,9 +127,11 @@ class MayaAlembicExporter(MayaQWidgetDockableMixin, QDialog) :
         print(f"Created folder named {folder_name}")
         self.exportNodes(children, folder_name)
 
-  # Split names on : and only take right-hand side
-  # to avoid long names for referenced-in objects
   def splitName(self, name_to_split) :
+    """
+    This function splits names on : and only take right-hand side
+    to avoid long names for referenced-in objects
+    """
     split_name = name_to_split.split(":")
     if len(split_name) > 1 :
       file_name = split_name[1]

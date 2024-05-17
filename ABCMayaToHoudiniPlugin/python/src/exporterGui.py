@@ -188,6 +188,10 @@ class MayaAlembicExporter(MayaQWidgetDockableMixin, QtWidgets.QDialog) :
     self.tex_dir_line_edit.setPlaceholderText(self.tex_dir)
 
   def exportSelected(self) :
+    """
+    Callback function for Ecport button pressed.
+    Kickstarts the export process.
+    """
     # Get the selected Objects
     current_view = cmds.getPanel(withFocus=True)
     objects = cmds.ls(sl=True)
@@ -200,33 +204,13 @@ class MayaAlembicExporter(MayaQWidgetDockableMixin, QtWidgets.QDialog) :
     os.makedirs(current_dir, exist_ok=True)
     print(f"current_dir = {current_dir}")
     self.exportNodes(objects, current_dir)
-    
-    # import to Houdini
-    # if self.destination_option.currentIndex() == 0 :
-    #   command = f"./src/executeSceneSetUpCode.sh {self.hip_filename.value()}"
-    #   result = subprocess.run(command,
-    #                           stdout = subprocess.PIPE,
-    #                           stderr = subprocess.STDOUT,
-    #                           text = True,
-    #                           shell=True)
-    #   print(result.stdout)
-    #   scene_filename = self.hip_filename.text()
-    # else :
-    #   scene_filename = self.hip_filename_existing.text()
-    # # importer code
-    # command = f"./src/executeImporterCode.sh {scene_filename} {self.assets_dir}"
-    # result = subprocess.run(command,
-    #                         stdout = subprocess.PIPE,
-    #                         stderr = subprocess.STDOUT,
-    #                         text = True,
-    #                         shell=True)
-    # print(result.stdout)
 
-
-  # Depth-first iteration over node tree
-  # to create corresponding directory structure
-  # and export files accordingly
   def exportNodes(self, nodes, current_dir) :
+    """
+    Depth-first iteration over node tree
+    to create corresponding directory structure
+    and export files accordingly
+    """
     for node in nodes :
       children = cmds.listRelatives(node, children=True, type="transform")
       if children is None :
@@ -246,9 +230,12 @@ class MayaAlembicExporter(MayaQWidgetDockableMixin, QtWidgets.QDialog) :
         print(f"Created folder named {folder_name}")
         self.exportNodes(children, folder_name)
 
-  # Split names on : and only take right-hand side
-  # to avoid long names for referenced-in objects
+
   def splitName(self, name_to_split) :
+    """
+    This function splits names on : and only take right-hand side
+    to avoid long names for referenced-in objects
+    """
     split_name = name_to_split.split(":")
     if len(split_name) > 1 :
       file_name = split_name[1]

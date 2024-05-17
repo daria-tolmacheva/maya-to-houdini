@@ -1,3 +1,8 @@
+################################################################################################
+# This file is a modified version of Jon Macey's installMdule.py script.
+# Original: https://github.com/NCCA/MayaAPICode/blob/master/PythonPlugins/QtUI/installModule.py
+################################################################################################
+
 import pathlib
 import platform
 import os
