@@ -1,0 +1,43 @@
+global proc shelf_AbcExporter () {
+    global string $gBuffStr;
+    global string $gBuffStr0;
+    global string $gBuffStr1;
+
+
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "AbcExporter" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "User Script" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -imageOverlayLabel "AbcExporter" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image "commandButton.png" 
+        -image1 "commandButton.png" 
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "if cmds.pluginInfo(\"ABCMayaToHoudiniPlugin\", q=True, loaded=True) :\n\tcmds.unloadPlugin(\"ABCMayaToHoudiniPlugin\")\n\ntry :\n\tdel sys.modules['exporterGui']\nexcept :\n\tpass\n\ntry :\n\tdel sys.modules['src']\nexcept :\n\tpass\n\nctrl=\"MayaAlembicExporterWorkspaceControl\"\nif maya.cmds.workspaceControl(ctrl, exists=True) :\n\tmaya.cmds.workspaceControl(ctrl, edit=True, close=True)\n\tmaya.cmds.deleteUI(ctrl, control=True)\n\ncmds.loadPlugin(\"ABCMayaToHoudiniPlugin\")\ncmds.ABCMayaExporter()" 
+        -sourceType "python" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+} 

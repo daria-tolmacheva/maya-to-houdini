@@ -3,7 +3,7 @@ import maya.cmds as cmds
 import maya.OpenMayaUI as OpenMayaUI1
 from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 
-from src.exporterGUI import MayaAlembicExporter
+from exporterGui import MayaAlembicExporter
 
 '''
 def maya_useNewAPI():
@@ -33,7 +33,7 @@ def MayaAlembicExporterScript(restore = False) :
         alembic_exporter_dialog.show(dockable=True, width=600, height=400,
                                  uiScript='MayaAlembicExporterScript(restore=True)')
 
-class ABCMayaExporter(om.MPxCommand):
+class ABCMayaExporter(om.MPxCommand) :
 
     CMD_NAME = "ABCMayaExporter"
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     As we are loading the plugin it needs to be in the plugin path.
     """
 
-    plugin_name = "ABCMayaExporter.py"
+    plugin_name = "exporterGUI.py"
 
     cmds.evalDeferred(
         'if cmds.pluginInfo("{0}", q=True, loaded=True): cmds.unloadPlugin("{0}")'.format(

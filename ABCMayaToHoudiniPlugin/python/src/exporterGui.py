@@ -9,18 +9,18 @@ from PySide2.QtGui import QCloseEvent
 
 import maya.api.OpenMayaUI as OpenMayaUI
 import maya.cmds as cmds
-import maya.OpenMayaUI as omui
+import maya.OpenMayaUI as OpenMayaUI1
 import pymel.core as pm
 from PySide2.QtCore import *
 from PySide2.QtWidgets import *
 from pathlib import Path
 from shiboken2 import wrapInstance
-from maya.app.general.mayaMixin import MayaQWidgetDockableMixi
+from maya.app.general.mayaMixin import MayaQWidgetDockableMixin
 import pymel.core as pm
 
 def get_main_window():
   """this returns the maya main window for parenting"""
-  window = omui.MQtUtil.mainWindow()
+  window = OpenMayaUI1.MQtUtil.mainWindow()
   return wrapInstance(int(window), QDialog)
 
 class MayaAlembicExporter(MayaQWidgetDockableMixin, QtWidgets.QDialog) :
