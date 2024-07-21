@@ -1,7 +1,7 @@
 # Automated pipeline to export animation from Maya to Houdini 
 
 This pipeline is developed to make the task of transferring animated multi-textured objects from Maya to Houdini. 
-Maya Exporter helps quickly export animated meshes as Alembic Cache files preserving the hierarchy in the firm of file structure.
+Maya Exporter helps quickly export animated meshes as Alembic Cache files preserving the hierarchy in the form of file structure.
 Houdini Importer helps quickly import those alembic files, while recreating the object hierarcy and creating individual materials with assigned textures to each component.
 
 ## Pre-Requisites
